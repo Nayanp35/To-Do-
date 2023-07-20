@@ -25,7 +25,7 @@ struct MainView: View {
                     
                 }
             } else {
-                LoginView()
+                LoginView(loginPresented: $viewModel.showingView)
             }
         }
     }
