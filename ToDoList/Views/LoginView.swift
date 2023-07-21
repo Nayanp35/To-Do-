@@ -8,25 +8,21 @@ struct LoginView: View {
         NavigationView {
             VStack {
                 // Header
-                HeaderView(angle: 0,
+                HeaderView(
+                           angle: 0,
                            background: .blue,
                            title: "To Do List",
-                           subtitle: "Get things done")
+                           subtitle: "Get things done"
+                           )
                 // Login Form
                 Form {
-//                    if !viewModel.errorMessage.isEmpty {
-//                        Text(viewModel.errorMessage)
-//                            .foregroundColor(Color.red)
-//
-//                    }
-                    
                     TextField("Email Address", text: $viewModel.email)
                         .autocorrectionDisabled()
                         .autocapitalization(.none)
                         .padding()
                     
                     
-                    SecureField("Password", text: $viewModel.password)
+                SecureField("Password", text: $viewModel.password)
                         .padding()
                     TLButton(title: "Log In", gradientLeft: .blue, gradientRight: .purple) {
                         if viewModel.validate() {
@@ -46,13 +42,13 @@ struct LoginView: View {
                 // Create Account
                 VStack {
                     Text("New Around Here?")
-                    NavigationLink("Create An Account", destination: RegisterView())
+                    NavigationLink("Create An Account", destination: RegisterView(registerPresented: $viewModel.showingView))
                 }
                 .padding(.bottom, 50)
                 
                 Spacer()
             }
-            .padding() // Adding overall padding to the VStack
+            .padding()
         }
     }
 }

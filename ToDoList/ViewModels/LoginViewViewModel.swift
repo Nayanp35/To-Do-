@@ -13,6 +13,7 @@ class LoginViewViewModel: ObservableObject {
     @Published var password = ""
     @Published var errorMessage = ""
     @Published var showAlert = false
+    @Published var showingView = false
     
     init() {}
     
@@ -23,10 +24,6 @@ class LoginViewViewModel: ObservableObject {
         
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
             if let error = error {
-                print("Login error:", error)
-                print("Email entered:", self?.email ?? "N/A")
-                print("Password entered:", self?.password ?? "N/A")
-                
                 self?.errorMessage = "Invalid email or password"
                 self?.showAlert = true
             }

@@ -9,10 +9,15 @@ import SwiftUI
 
 struct RegisterView: View {
     @StateObject var viewModel = RegisterViewViewModel()
+    @Binding var registerPresented: Bool
     
     var body: some View {
         VStack {
-            HeaderView(angle: 0, background: .purple, title: "Register", subtitle: "Start Organizing things")
+            HeaderView(
+                angle: 0, 
+            background: .purple, 
+            title: "Register", 
+            subtitle: "Start Organizing things")
             
             Form {
                 TextField("Full Name", text: $viewModel.name)
@@ -30,7 +35,16 @@ struct RegisterView: View {
                     .padding()
          
                 TLButton(title: "Enter", gradientLeft: .blue, gradientRight: .purple) {
-                    viewModel.register()
+                    if viewModel.validate() {
+                        viewModel.register()
+                    } else {
+                        viewModel.showAlert = true
+                    }
+                }
+                .alert(isPresented: $viewModel.showAlert) {
+                    Alert(title: Text("Could not Register"),
+                          message: Text(viewModel.errorMessage)
+                    )
                 }
             }
             
@@ -42,6 +56,10 @@ struct RegisterView: View {
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView()
+        RegisterView(registerPresented: Binding(get: {
+            return true
+        }, set: { _ in
+        
+        }))
     }
 }
